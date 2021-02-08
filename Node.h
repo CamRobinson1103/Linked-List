@@ -29,4 +29,5 @@ int main() {
     cout << "The linked list is: ";
     display();
     return 0;
-}
+}//Restarting because why tf not I nevurs
+//(Node)
