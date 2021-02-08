@@ -1,0 +1,11 @@
+﻿  Iterator.cpp
+  List.cpp
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(10,6): error C2143: syntax error: missing ';' before '<'
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(13): message : see reference to class template instantiation 'Lists<T>' being compiled
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(10,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(10,1): error C2238: unexpected token(s) preceding ';'
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(11,6): error C2143: syntax error: missing ';' before '<'
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(11,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\s208065\Documents\Projects\Link List\Linked List\Linked List\Lists.h(11,1): error C2238: unexpected token(s) preceding ';'
+  Node.cpp
+  Generating Code...

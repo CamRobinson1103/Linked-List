@@ -4,7 +4,8 @@ class Iterator
 public:
 
 
+
 private:
-	<Node>
+
 };
 
