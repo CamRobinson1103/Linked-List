@@ -35,7 +35,11 @@ inline List<T>& List<T>::operator=(List<T>& rhs)
 template<typename T>
 inline void List<T>::initialize()
 {
-
+	for (int i = 0; i < num; ++i)
+	{
+		insert(itr, val);
+		++itr;
+	}
 }
 
 template<typename T>
