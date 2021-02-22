@@ -8,19 +8,18 @@ public:
     Iterator<T> operator++();
     Iterator<T> operator--();
     const bool operator==(const Iterator<T>& iter);
-    T operator*()//imma try to aim to turn this in;
+    T operator*();
 
 
 
 private:
     Node<T>* current;
-    
 };
 
 template<typename T>
 inline Iterator<T>::Iterator(Node<T>* node)
 {
-
+    
 }
 
 template<typename T>
