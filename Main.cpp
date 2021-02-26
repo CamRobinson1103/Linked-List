@@ -1,26 +1,22 @@
+#include "List.h"
 #include <iostream>
-#include "List.h";
-
-
 
 int main()
 {
-	std::cout << "Making a Link List: " << std::endl;
-	List<int>* list = new List<int>();
+	List<int>* List2 = new List<int>();
+	List2->initialize();
 
-	std::cout << "Printing: " << std::endl;
-	list->print();
+	List2->pushFront(2);
+	List2->pushFront(4);
+	List2->pushBack(6);
+	List2->pushFront(8);
+	List2->pushBack(10);
+	List2->print();
+	std::cout << std::endl;
+
+	List2->sort();
+	List2->print();
 
 	system("pause");
-
-	std::cout << "Adding 2 nodes: " << std::endl;
-	list->insert(5, 1);
-	list->insert(4, 2);
-
-	std::cout << "Printing: " << std::endl;
-	list->print();
-
-	system("pause");
-
 	return 0;
-}
+};

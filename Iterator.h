@@ -1,103 +1,54 @@
 #pragma once
 #include "Node.h"
-
 template <typename T>
 class Iterator
 {
 public:
-	Iterator<T>();
-	Iterator<T>(Node<T>* node);
-	Iterator<T> operator ++();
-	Iterator<T> operator --();
+	Iterator() {};
+	Iterator(Node<T>* node);
+
+	Iterator<T> operator ++(T);
+	Iterator<T> operator --(T);
 	const bool operator ==(const Iterator<T>& iter);
 	const bool operator !=(const Iterator<T>& iter);
 	T operator *();
 
 private:
-	Node<T>* current;
+	Node<T>* m_current;
 };
 
-//Default constructor for Iterator
-template<typename T>
-inline Iterator<T>::Iterator()
-{
-	//Sets the variable current to nullptr
-	current = nullptr;
-}
-
-//Constructor for Iterator that takes in a Mode as an argument
 template<typename T>
 inline Iterator<T>::Iterator(Node<T>* node)
 {
-	//Sets the variable current to node
-	current = node;
+	m_current = node;
 }
 
-//Operator overload for increment
 template<typename T>
-inline Iterator<T> Iterator<T>::operator++()
+inline Iterator<T> Iterator<T>::operator++(T)
 {
-	//Checks to see if current's next is not nullptr
-	if (current->next != nullptr)
-	{
-		//If so, sets current to be currents next and returns
-		current = current->next;
-		return *this;
-	}
-	return nullptr;
+	return Iterator<T>(m_current->next);
 }
 
-//Operator overload for decrement
 template<typename T>
-inline Iterator<T> Iterator<T>::operator--()
+inline Iterator<T> Iterator<T>::operator--(T)
 {
-	//Checks to see if current's next is not nullptr
-	if (current->next != nullptr)
-	{
-		//If so sets current to be current's next and returns
-		current = current->next;
-		return *this;
-	}
-	return nullptr;
+	return Iterator<T>(m_current->next);
 }
 
-//Operator overload for equal to
 template<typename T>
 inline const bool Iterator<T>::operator==(const Iterator<T>& iter)
 {
-	if (current != nullptr && iter.current != nullptr && current->data == &iter.current->data)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return iter.m_current == m_current;
 }
 
-//Operator overload for not equal to
 template<typename T>
 inline const bool Iterator<T>::operator!=(const Iterator<T>& iter)
 {
-	if (current == nullptr || iter.current == nullptr)
-	{
-		return false;
-	}
-
-	if (&current->data != &iter.current->data)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return iter.m_current->data != m_current->data;
 }
 
-//Operator overload for multiply
 template<typename T>
 inline T Iterator<T>::operator*()
 {
-	//Returns current's data
-	return current->data;
+	return m_current->data;
 }

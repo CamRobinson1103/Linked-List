@@ -1,273 +1,254 @@
+#pragma once
+#include "Iterator.h"
 #include <iostream>
-#include "Iterator.h";
-#include "Node.h";
-
-template<typename T>
+template <typename T>
 class List
 {
 public:
-	//List()
+	List() {};
+	List(List<T>& otherList);
 
-	List<T>();
-	List(List<T>& list);
-	~List<T>();
+	/// Returns an Iterator pointing to the first Node in the List
+	Iterator<T> begin() const;
 
+	/// Returns the next item after the last Node in the List
+	Iterator<T> end() const;
+
+	/// Deletes all nodes in the List
 	void destroy();
 
-	const Iterator<T> begin();
-	const Iterator<T> end();
+	/// Adds a new Node to the beginning of the List
+	void pushFront(const T& value);
 
+	/// Adds a new Node to the end of the List
+	void pushBack(const T& value);
 
-	bool contains(const T& object);
-
-	const void pushFront(const T& object);
-	void pushBack(const T& object);
-
+	/// Adds a new Node to the List at the given index
 	bool insert(const T& value, int index);
+
+	/// Removes all Nodes with the given value
 	bool remove(const T& value);
-
-
-	void print();
-	void initialize();
-	bool isEmpty();
-	bool getData(Iterator<T>& iter, int index);
-	const int getLength();
-
-
-	const List<T>& operator= (const List<T>& otherList);
 
 	void sort();
 
+	/// Prints the values of all the Nodes
+	void print() const;
+
+	void initialize();
+
+	/// Checks to see if the given item is in the List
+	bool contains(const T& object);
+
+	/// Returns an empty list
+	bool isEmpty() const;
+
+	/// Gets data at thr given index
+	bool getData(Iterator<T>& iter, int index);
+
+	/// Returns the amount of Nodes in the List
+	int getLength() const;
+
+	void operator =(const List<T>& otherList);
+
 private:
-	Node<T>* m_first;
-	Node<T>* m_last;
+	Node<T>* m_first, m_head = Node<T>();
+	Node<T>* m_last, m_tail = Node<T>();
 	int m_nodeCount = 0;
 };
 
 template<typename T>
-inline List<T>::List()
+inline List<T>::List(List<T>& otherList)
 {
+	this = otherList;
 }
 
 template<typename T>
-inline List<T>::~List()
+inline Iterator<T> List<T>::begin() const
 {
-	delete List<T>;
+	return Iterator<T>(m_first);
 }
 
 template<typename T>
-inline List<T>::List(List<T>& list)
+inline Iterator<T> List<T>::end() const
 {
-	this = list;
-}
-
-template<typename T>
-inline void List<T>::initialize()
-{
-	m_first = nullptr;
-	m_last = nullptr;
-	m_first->previous = nullptr;
-	m_last->next = nullptr;
-}
-
-
-template<typename T>
-inline bool List<T>::isEmpty()
-{
-	bool isItEmpty = false;
-
-
-}
-
-//sets the given iterator to the point to a node at the given index
-template<typename T>
-inline bool List<T>::getData(Iterator<T>& iter, int index)
-{
-	bool gotData = false;
-	auto iter = List->begin();
-
-	while (iter != List->end())
-	{
-		iter++;
-
-		if (iter = index)
-		{
-			gotData = true;
-			iter++;
-		}
-	}
-
-	return gotData;
-}
-
-template<typename T>
-inline const int List<T>::getLength()
-{
-	int length = 0;
-	for (Iterator i = m_first; i < m_last; i++)
-	{
-		length++;
-	}
-	return length;
-}
-
-template<typename T>
-inline const List<T>& List<T>::operator=(const List<T>& otherList)
-{
-	Iterator<T> tempIter = new Iterator(begin());
-	Iterator<T> tempIterOther = new Iterator(otherList->m_first);
-	while (tempIter != otherList->m_last);
-	{
-		for (int i = 0; i < otherList->getLength(); i++)
-		{
-			tempIter.m_current = tempIterOther->m_current;
-		}
-	}
-
-}
-
-template<typename T>
-inline void List<T>::sort()
-{
-	for (int i = 0; i < m_nodeCount; i++)
-	{
-		for (int j = m_nodeCount - 1; j > i; j--)
-		{
-			if (Iterator<T>.m_current < Iterator<T>.next)
-			{
-				T temp = Iterator<T>.m_current;
-				Iterator* m_current = this.next;
-				this.next = temp;
-			}
-
-		}
-	}
+	return Iterator<T>(m_last);
 }
 
 template<typename T>
 inline void List<T>::destroy()
 {
 	for (Iterator<T> iter = begin(); iter != end(); ++iter)
+	{
 		remove(iter.m_current);
-}
-
-template<typename T>
-inline const Iterator<T> List<T>::begin()
-{
-	return Iterator<T>(m_first);
-}
-
-template<typename T>
-inline const Iterator<T> List<T>::end()
-{
-	return Iterator<T>(m_last);
-}
-
-//this prints the values for all the nodes
-template<typename T>
-inline void List<T>::print()
-{
-	for (Iterator<int> iter = begin(); iter != end(); ++iter)
-	{
-		std::cout << *iter << std::endl;
 	}
 }
 
-//checks to see if the given items is in the list
 template<typename T>
-inline bool List<T>::contains(const T& object)
+inline void List<T>::pushFront(const T& value)
 {
-	bool isThere = false;
-	Iterator iter = begin();
+	Node<T>* newNode = new Node<T>(value);
+	m_first->previous = newNode;
+	newNode->next = m_first;
 
-	while (iter != end())
-	{
-		iter++;
+	newNode->previous = nullptr;
+	m_first = newNode;
 
-		if (iter == object)//this will check if the object is actually there and if it is, it will say isThere is true
-		{
-			isThere = true;
-		}
-	}
+	m_nodeCount++;
 
-	return isThere;
+	if (m_nodeCount == 1)
+		m_last = newNode;
+	else if (m_nodeCount == 2)
+		m_last = newNode->next;
 }
 
 template<typename T>
-inline const void List<T>::pushFront(const T& object)
+inline void List<T>::pushBack(const T& value)
 {
-	Node<T> newFirst = new Node<T>;
-
-	newFirst->m_nodeCount = object;
-
-	newFirst->next() = (*m_first);
-	newFirst->previous() = nullptr;
-
-	//this is when he previous head is the new Node
-	if ((*m_first) != nullptr)
-		(*m_first)->previous = newFirst;
-
-	//the head points to the new node
-	(*m_first) = newFirst;
-	return void();
-}
-
-template<typename T>
-inline void List<T>::pushBack(const T& object)
-{
-	Node<T>* newNode = new Node<T>(object);
-
-	Node<T>* last = *m_first;
-	//was originially m_last
-
-	newNode->data = object;
-
+	Node<T>* newNode = new Node<T>(value);
+	m_last->next = newNode;
+	newNode->previous = m_last;
 	newNode->next = nullptr;
+	m_last = newNode;
 
-	if (*m_first == nullptr)
-	{
-		newNode->previous = nullptr;
-		*m_first = newNode;
-		return;
-	}
+	m_nodeCount++;
 
-	while (m_last->next != nullptr)
-	{
-		last = m_last->next;
-		last->previous = last;
-
-		newNode->previous = last;
-		return;
-	}
-
+	if (m_nodeCount == 1)
+		m_first = newNode;
+	else if (m_nodeCount == 2)
+		m_first = newNode->previous;
 }
 
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
-	bool isInserted = false;
-	Node<T>* temp = &Node<T>(value);
 	Iterator<T> iter = begin();
+	for (int i = 0; i < index; i++)
+		iter++;
 
-	temp->next = m_first;
-	m_first->previous = temp;
-	isInserted = true;
+	Node<T> newNode = new Node<T>(value);
 
-	return isInserted;
+	newNode.previous = iter.m_current.previous;
+	newNode.next = iter.m_current;
+
+	iter.m_current.previous->next = newNode;
+	iter.m_current.previous = newNode;
+
+	newNode.previous = newNode;
+
+	if (iter.m_current == m_first)
+		m_first = newNode;
+
+	if (iter.m_current == m_last)
+		m_last = newNode;
+
+	m_nodeCount++;
+	return true;
+
 }
 
 template<typename T>
 inline bool List<T>::remove(const T& value)
 {
-	bool isRemoved = false;
+	Iterator<T> iter = Iterator<T>();
+	for (Iterator<T> iter = begin(); iter != end(); ++iter)
+		if (contains(value))
+		{
+			if (iter == m_first)
+				m_first = iter--;
 
-	if (value != nullptr)
+			iter.m_current.next.previous = iter.m_current.previous;
+			iter.m_current.next = iter.m_current.next;
+
+			delete(iter.m_current);
+			m_nodeCount--;
+			return true;
+		}
+	return false;
+}
+
+template<typename T>
+inline void List<T>::sort()
+{
+	Iterator<T> iter = begin();
+	Iterator<T> jter = end();
+	for (int i = 0; i < getLength(); i++)
 	{
-		value = value.previous;
-		delete value;
-		isRemoved = true;
+		for (int j = getLength() - 1; j > i; j--)
+		{
+			getData(iter, j - 1);
+			getData(jter, j);
+			if (*jter < *iter)
+			{
+				Iterator<T> temp;
+				temp = jter;
+				jter = iter;
+				iter = temp;
+			}
+		}
+	}
+}
+
+template<typename T>
+inline void List<T>::print() const
+{
+	for (Iterator<T> iter = begin(); iter != end(); iter = iter++)
+		std::cout << *iter << " ";
+	std::cout << std::endl;
+}
+
+template<typename T>
+inline void List<T>::initialize()
+{
+	m_first = new Node<T>();
+	m_last = new Node<T>();
+	m_nodeCount = 0;
+}
+
+template<typename T>
+inline bool List<T>::contains(const T& object)
+{
+	for (int i = 0; i < getLength(); i++)
+		if (i == object)
+			return true;
+	return false;
+}
+
+template<typename T>
+inline bool List<T>::isEmpty() const
+{
+	return (!m_first);
+}
+
+template<typename T>
+inline bool List<T>::getData(Iterator<T>& iter, int index)
+{
+	iter = begin();
+
+	for (int i = 0; i < index; i++)
+	{
+		iter = iter++;
 	}
 
-	return isRemoved;
+	return false;
+}
+
+template<typename T>
+inline int List<T>::getLength() const
+{
+	return m_nodeCount;
+}
+
+template<typename T>
+inline void List<T>::operator=(const List<T>& otherList)
+{
+	Iterator<T> tempIter = new Iterator<T>(begin());
+	Iterator<T> tempIterOther = new Iterator<T>(otherList->m_first);
+	while (tempIter.m_current != otherList.m_last)
+	{
+		for (int i = 0; i < otherList->getLength(); i++)
+		{
+			tempIter->m_current = tempIterOther->m_current;
+		}
+	};
 }
 
