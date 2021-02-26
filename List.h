@@ -8,7 +8,7 @@ public:
 	List() {};
 	List(List<T>& otherList);
 
-	/// Returns an Iterator pointing to the first Node in the List
+	/// Returns Iterator pointing to the first Node 
 	Iterator<T> begin() const;
 
 	/// Returns the next item after the last Node in the List
@@ -45,14 +45,14 @@ public:
 	/// Gets data at thr given index
 	bool getData(Iterator<T>& iter, int index);
 
-	/// Returns the amount of Nodes in the List
+	/// Gets the length of the list
 	int getLength() const;
 
 	void operator =(const List<T>& otherList);
 
 private:
-	Node<T>* m_first, m_head = Node<T>();
-	Node<T>* m_last, m_tail = Node<T>();
+	Node<T>* m_first = Node<T>();
+	Node<T>* m_last = Node<T>();
 	int m_nodeCount = 0;
 };
 
